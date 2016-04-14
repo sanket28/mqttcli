@@ -46,6 +46,9 @@ func subscribe(c *cli.Context) {
 
 	// loops forever
 	for {
+		if messageReceived == true {
+			break
+		}
 		time.Sleep(time.Second)
 	}
 

@@ -15,6 +15,7 @@ import (
 
 var MaxClientIdLen = 8
 var MaxRetryCount = 3
+var messageReceived = false
 
 type MQTTClient struct {
 	Client     *MQTT.Client
@@ -75,6 +76,12 @@ func (m *MQTTClient) ConnectionLost(client *MQTT.Client, reason error) {
 func (m *MQTTClient) onMessageReceived(client *MQTT.Client, message MQTT.Message) {
 	log.Infof("topic:%s / msg:%s", message.Topic(), message.Payload())
 	fmt.Println(string(message.Payload()))
+	err := m.Disconnect()
+	if err != nil {
+		log.Error("Could not disconnect")
+	}
+
+	messageReceived = true
 }
 
 func getCertPool(pemPath string) (*x509.CertPool, error) {
