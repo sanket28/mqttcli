@@ -77,30 +77,30 @@ func readFromConfigFile(path string) (Config, error) {
 
 	return ret, nil
 }
-func UserHomeDir() string {
-	if runtime.GOOS == "windows" {
-		home := os.Getenv("HOMEDRIVE") + os.Getenv("HOMEPATH")
-		if home == "" {
-			home = os.Getenv("USERPROFILE")
-		}
-		return home
-	}
-	return os.Getenv("HOME")
-}
+// func UserHomeDir() string {
+// 	if runtime.GOOS == "windows" {
+// 		home := os.Getenv("HOMEDRIVE") + os.Getenv("HOMEPATH")
+// 		if home == "" {
+// 			home = os.Getenv("USERPROFILE")
+// 		}
+// 		return home
+// 	}
+// 	return os.Getenv("HOME")
+// }
 func getSettingsFromFile(p string, opts *MQTT.ClientOptions) error {
 	confPath := ""
-	home := UserHomeDir()
-	// replace home to ~ in order to match
-	p = strings.Replace(p, home, "~", 1)
-	if p == "~/.mqttcli.cfg" || p == "" {
-		confPath = path.Join(home, DefaultConfigFile)
-		_, err := os.Stat(confPath)
-		if os.IsNotExist(err) {
-			return err
-		}
-	} else {
-		confPath = p
-	}
+	// home := UserHomeDir()
+	// // replace home to ~ in order to match
+	// p = strings.Replace(p, home, "~", 1)
+	// if p == "~/.mqttcli.cfg" || p == "" {
+	// 	confPath = path.Join(home, DefaultConfigFile)
+	// 	_, err := os.Stat(confPath)
+	// 	if os.IsNotExist(err) {
+	// 		return err
+	// 	}
+	// } else {
+	confPath = p
+	// }
 
 	ret, err := readFromConfigFile(confPath)
 	if err != nil {
